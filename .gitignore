@@ -1,1 +1,35 @@
+# Compiled class files
 *.class
+
+# Logs
+*.log
+
+# Build directories
+/target/
+/build/
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java crash logs
+hs_err_pid*
+
+# Temporary files
+*.bak
+*.tmp
+*.swp
+*~
