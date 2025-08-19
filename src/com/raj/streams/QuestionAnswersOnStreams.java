@@ -50,7 +50,6 @@ public class QuestionAnswersOnStreams {
 		Stream<String> stream1 = Stream.of("a","b");
 		Stream<String> stream2 = Stream.of("c","d");
 		Stream<String> mergeTwoStreams = Stream.concat(stream1, stream2);
-		mergeTwoStreams.forEachOrdered(e->System.out.println(e));// TODO Auto-generated method stub
-	    	
+		mergeTwoStreams.forEachOrdered(e->System.out.println(e));// TODO Auto-generated method stub	    	
 	}
 }
