@@ -58,8 +58,23 @@ public class QuestionAnswerOnStreams {
 				            .collect(Collectors.toList())
 				            .forEach(e-> {System.out.println(e.getName()+" Salary is = "+e.getSalary()+" Rs.");});;
 		// Group By Department
-		   Map<String, List<Employee>> groupedByDept = employeeList.stream()
-				                .collect(Collectors.groupingBy(Employee::getAddress));
+		   employeeList.stream()
+				                .collect(Collectors.groupingBy(Employee::getAddress, Collectors.counting()))
+	                            .forEach((address, totalcount) -> {
+	                               System.out.print(address + ":"+totalcount);
+	                               //empList.forEach(e -> System.out.print( e.getName()+", "));
+	                               System.out.println();
+	                              });
+		   Map<String, List<String>> namesByAddress = employeeList.stream()
+				    .collect(Collectors.groupingBy(Employee::getAddress,
+				        Collectors.mapping(Employee::getName, Collectors.toList())
+				    ));
+		   namesByAddress.forEach((add,list)->{
+			          System.out.print(add+":");
+			          list.forEach(name-> System.out.print(name+", "));
+			          System.out.println();
+			      
+		   });
 
 	}
 
