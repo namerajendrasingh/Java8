@@ -65,11 +65,12 @@ public class QuestionAnswerOnStreams {
 	                               //empList.forEach(e -> System.out.print( e.getName()+", "));
 	                               System.out.println();
 	                              });
-		   Map<String, List<String>> namesByAddress = employeeList.stream()
+		   Map<String, List<String>> namesByAddress = employeeList.stream().peek(e->System.out.println("debugging"+e.getName()))
 				    .collect(Collectors.groupingBy(Employee::getAddress,
 				        Collectors.mapping(Employee::getName, Collectors.toList())
 				    ));
-		   namesByAddress.forEach((add,list)->{
+		   namesByAddress
+		   .forEach((add,list)->{
 			          System.out.print(add+":");
 			          list.forEach(name-> System.out.print(name+", "));
 			          System.out.println();
