@@ -36,10 +36,18 @@ public class QuestionAnswerOnStreams {
 		emp2.setSalary(240000.00);
 		emp2.setAddress("Rishikesh");
 		
+		Employee emp3 = new Employee();
+		emp3.setId(10);
+		emp3.setName("Gargi");
+		emp3.setDesignation("Doctor");
+		emp3.setSalary(120000.00);
+		emp3.setAddress("Gurugram");
+		
 		List<Employee> employeeList = new ArrayList<>();
 		employeeList.add(emp);
 		employeeList.add(emp1);
 		employeeList.add(emp2);
+		employeeList.add(emp3);
 		
 		//Find Employee with MAX Salary
 		
@@ -76,7 +84,22 @@ public class QuestionAnswerOnStreams {
 			          System.out.println();
 			      
 		   });
-
+		   //Question: How do you filter employees who work as a  "Doctor" and have a salary above 1,00,000?
+            
+		   employeeList.stream()
+		               .filter(e-> "teacher".equalsIgnoreCase(e.getDesignation()) && e.getSalary() > 100000)
+		               .collect(Collectors.toList()).forEach(e->System.out.println(e.getDesignation()+"->"+e.getSalary()));
+	
+	      //Multi Level Grouping
+		    employeeList.stream()
+				        .collect(Collectors.groupingBy(Employee::getDesignation,Collectors.groupingBy(Employee::getSalary)))
+				        .forEach((salary,empList)-> {
+				            System.out.println(salary);
+				            empList.forEach((x,y)->{
+				            System.out.println(x);
+				            y.forEach(e->{System.out.print(e.getSalary());});
+				            });
+				       }); 
 	}
 
 }
