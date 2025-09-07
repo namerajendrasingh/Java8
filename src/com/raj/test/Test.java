@@ -3,11 +3,15 @@ package com.raj.test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -28,6 +32,27 @@ public class Test {
         list.add(new Employee("Jackie Wong", "Marketing", 74000, 31));
         list.add(new Employee("Kevin Patel", "Development", 92000, 38));
         list.add(new Employee("Laura Martinez", "Finance", 83000, 45));
+       
+        
+        Optional<Employee> minAge = list.stream().min(Comparator.comparing(Employee::getAge));
+        System.out.println("Min Age"+ minAge.get().getAge());
+        
+        Optional<Employee> maxAge = list.stream().max(Comparator.comparing(Employee::getAge));
+        System.out.println("Max Age"+ maxAge.get().getAge());
+        List<Double> numList = Arrays.asList(1.0,2.0,3.0,5.0,6.0,3.0);
+        double total = numList.stream().mapToDouble(Double::doubleValue).sum();
+        System.out.println("Total Salary"+total);
+        
+         list.stream().mapToDouble(Employee::getSalary)
+                      .average()
+                      .ifPresentOrElse(t->System.out.println(t),()-> System.out.println( "Salary Not Available to calculate Average"));
+        /**
+         * Sum Of All salary
+         */
+         double totalSalary = list.stream().map(Employee :: getSalary)
+             .mapToDouble(Double :: doubleValue).sum();
+         System.out.println("Double "+ totalSalary);
+             //.collect(Collectors.toList());
         
        /**
         * Fetching Employee Object Using Separate Property 
@@ -37,6 +62,23 @@ public class Test {
        List<Double> salary =  list.stream().map(Employee::getSalary).collect(Collectors.toList());
        List<Integer> age =  list.stream().map(Employee::getAge).collect(Collectors.toList());
        
+       
+       /**
+        * Grouping By Department
+        */
+        Map<String,List<Employee>> groupByDepartment = list.stream().collect(Collectors.groupingBy(Employee:: getDepartment,TreeMap :: new, Collectors.toList()));
+        groupByDepartment.forEach((H,E)->System.out.println(H+"-->"+E));
+        
+        Iterator<Entry<String, List<Employee>>> it = groupByDepartment.entrySet().iterator();
+        while (it.hasNext()) {
+			Entry<String, List<Employee>> obj = it.next();
+			System.out.print(obj.getKey()+"::");
+			List<Employee> nestedEmployeee = obj.getValue();
+			for (Employee employee : nestedEmployeee) {
+				System.out.print(employee.getName()+",");
+			}
+			System.out.println();
+		}
        
         //Find Max Salary In List
       OptionalDouble maxSalary = list.stream().mapToDouble(Employee::getSalary).max();
